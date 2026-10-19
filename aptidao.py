@@ -8,10 +8,17 @@ peças dividida pela área da chapa (vale entre 0 e 1).
 from decodificador import decodificar
 
 def aproveitamentos(chapas, W, H):
-    # Aproveitamento (0 a 1) de cada chapa.
     area_chapa = W * H
-    return [sum(w * h for _, _, _, w, h in chapa) / area_chapa
-            for chapa in chapas]
+    l_aproveitamentos = []
+    for chapa in chapas:                 # laço para cada chapa
+        area_ocupada = 0                 # zera o "contador" a cada chapa nova
+        for _, _, _, w, h in chapa:      # laço para cada peça da chapa
+            area_ocupada = area_ocupada + w * h
+
+        # guarda l_aproveitamentos dessa chapa
+        l_aproveitamentos.append(area_ocupada / area_chapa)
+    
+    return l_aproveitamentos
 
 def calcular_aptidao(chapas, W, H):
     # Retorna a nota de um conjunto de chapas já montadas (menor é melhor)
@@ -23,18 +30,20 @@ def avaliar(ordem, pecas, W, H):
     return calcular_aptidao(chapas, W, H), len(chapas)
 
 if __name__ == "__main__":
-    # Exemplo dos tópicos 2 e 3: chapa 10 x 4, peças A, B, C, D
+    # Exemplo: chapa 10 x 4
     W, H = 10, 4
+
+    # (largura, altura) das pecas A, B, C, D, respectivamente
     pecas = [(6, 3), (4, 2), (4, 2), (6, 1)]
     nomes = "ABCD"
 
-    for ordem in ([0, 1, 2, 3], [1, 3, 2, 0]):
+    for ordem in ([0, 1, 2, 3], [1, 3, 2, 0]):      # A,B,C,D  e  B,D,C,A
         chapas = decodificar(ordem, pecas, W, H)
         aprov = aproveitamentos(chapas, W, H)
         nota = calcular_aptidao(chapas, W, H)
         print("Ordem:", ", ".join(nomes[i] for i in ordem))
-        print(f"  chapas: {len(chapas)}")
-        print("  aproveitamento de cada chapa:",
+        print(f"  Chapas: {len(chapas)}")
+        print("  Aproveitamento de cada chapa:",
               ", ".join(f"{a:.2f}" for a in aprov))
-        print(f"  aptidão = ({len(chapas)} - 1) + {min(aprov):.2f} = {nota:.2f}")
+        print(f"  Aptidão = ({len(chapas)} - 1) + {min(aprov):.2f} = {nota:.2f}")
         print()
