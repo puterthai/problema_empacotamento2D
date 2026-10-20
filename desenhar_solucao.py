@@ -1,4 +1,4 @@
-"""Passo 7: desenha uma solução encontrada pelo AG (figura do relatório).
+"""Cod07: desenha uma solução encontrada pelo AG (figura do relatório).
 
 Uso:  python desenhar_solucao.py [instância] [semente]
       python desenhar_solucao.py cl_05_040_01 9      (valores padrão)
