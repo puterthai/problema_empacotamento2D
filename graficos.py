@@ -15,10 +15,9 @@ import matplotlib.pyplot as plt
 PASTA_RESULTADOS = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "resultados")
 
-# Cores (paleta validada para daltonismo): AG = azul, aleatória = laranja
+# Cores (paleta validada para daltonismo): AG = azul
 COR_AG = "#2a78d6"
-COR_AL = "#eb6834"
-COR_PISO = "#52514e"
+COR_LB = "#52514e"
 TEXTO = "#0b0b0b"
 TEXTO_2 = "#52514e"
 GRADE = "#e3e2de"
@@ -42,8 +41,7 @@ def ler(caminho):
 
 def grafico_convergencia(conv, resultados, instancias):
     """Uma janela por instância: aptidão do melhor indivíduo ao longo das
-    gerações (média das execuções e faixa do melhor ao pior). A linha
-    laranja é a média da busca aleatória, que não tem gerações."""
+    gerações (média das execuções e faixa do melhor ao pior)."""
     ncols = 2
     nrows = -(-len(instancias) // ncols)
     fig, eixos = plt.subplots(nrows, ncols, figsize=(9, 3.2 * nrows),
@@ -58,13 +56,9 @@ def grafico_convergencia(conv, resultados, instancias):
         minimo = [min(por_geracao[g]) for g in ger]
         maximo = [max(por_geracao[g]) for g in ger]
         ax.fill_between(ger, minimo, maximo, color=COR_AG, alpha=0.15,
-                        linewidth=0)
-        ax.plot(ger, media, color=COR_AG, linewidth=2, label="AG (média das execuções)")
-
-        al = [float(r["aptidao"]) for r in resultados
-              if r["instancia"] == nome and r["metodo"] == "Aleatoria"]
-        ax.axhline(statistics.mean(al), color=COR_AL, linewidth=2,
-                   linestyle="--", label="Busca aleatória (média)")
+                        linewidth=0, label="Melhor e pior execução")
+        ax.plot(ger, media, color=COR_AG, linewidth=2,
+                label="AG (média das execuções)")
 
         n_pecas = next(r["n_pecas"] for r in resultados if r["instancia"] == nome)
         ax.set_title(f"{nome}  ({n_pecas} peças)", fontsize=10, loc="left")
@@ -81,33 +75,30 @@ def grafico_convergencia(conv, resultados, instancias):
 
 
 def grafico_comparacao(resultados, instancias):
-    """Barras: número médio de chapas de cada método, com traço do melhor
-    ao pior resultado nas execuções. O traço cinza é o piso por área."""
-    fig, ax = plt.subplots(figsize=(11, 4.6))
-    larg = 0.36
-    for k, (metodo, cor, rotulo) in enumerate(
-            [("AG", COR_AG, "AG"), ("Aleatoria", COR_AL, "Busca aleatória")]):
-        xs, medias, abaixo, acima = [], [], [], []
-        for i, nome in enumerate(instancias):
-            v = [int(r["chapas"]) for r in resultados
-                 if r["instancia"] == nome and r["metodo"] == metodo]
-            m = statistics.mean(v)
-            xs.append(i + (k - 0.5) * (larg + 0.03))
-            medias.append(m)
-            abaixo.append(m - min(v))
-            acima.append(max(v) - m)
-        ax.bar(xs, medias, width=larg, color=cor, label=rotulo,
-               edgecolor=FUNDO, linewidth=1)
-        ax.errorbar(xs, medias, yerr=[abaixo, acima], fmt="none",
-                    ecolor=TEXTO, elinewidth=1, capsize=3)
+    """Diferença entre o AG e o UB publicado (melhor solução conhecida).
+    Zero = igual ao melhor conhecido. Ponto: média das execuções; traço
+    vertical: do melhor ao pior resultado; traço cinza: LB publicado (a
+    faixa entre o LB e o zero é onde o ótimo pode estar)."""
+    fig, ax = plt.subplots(figsize=(10, 4.2))
+    rotulos = []
     for i, nome in enumerate(instancias):
-        piso = int(next(r["piso"] for r in resultados if r["instancia"] == nome))
-        ax.plot([i - 0.42, i + 0.42], [piso, piso], color=COR_PISO, linewidth=2,
-                label="Piso por área" if i == 0 else None)
+        linhas = [r for r in resultados if r["instancia"] == nome]
+        lb, ub = int(linhas[0]["lb_pub"]), int(linhas[0]["ub_pub"])
+        v = [int(r["chapas"]) - ub for r in linhas]
+        m = statistics.mean(v)
+        ax.errorbar(i, m, yerr=[[m - min(v)], [max(v) - m]], fmt="o",
+                    color=COR_AG, ecolor=COR_AG, elinewidth=2, capsize=4,
+                    markersize=7, label="AG: média, melhor e pior" if i == 0 else None)
+        ax.plot([i - 0.25, i + 0.25], [lb - ub, lb - ub], color=COR_LB,
+                linewidth=3, label="LB publicado" if i == 0 else None)
+        rotulos.append(f"{nome}\nLB {lb} | UB {ub}")
+    ax.axhline(0, color=TEXTO, linewidth=1, label="UB publicado (melhor conhecido)")
     ax.set_xticks(range(len(instancias)))
-    ax.set_xticklabels(instancias, rotation=20, ha="right")
-    ax.set_ylabel("Número de chapas (menor é melhor)")
-    ax.set_title("Chapas usadas: média de cada método e variação entre execuções",
+    ax.set_xticklabels(rotulos, fontsize=8)
+    ax.set_ylabel("Chapas a mais que o UB publicado")
+    ax.set_ylim(-2, 2)
+    ax.set_yticks([-2, -1, 0, 1, 2])
+    ax.set_title("AG em relação ao melhor valor conhecido (0 = igual ao UB)",
                  loc="left")
     ax.grid(axis="x", visible=False)
     ax.legend(frameon=False, ncol=3, loc="upper left")
