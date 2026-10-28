@@ -9,7 +9,7 @@ O que faz:
   3. confere que a solução é válida (toda peça uma vez, sem sobreposição);
   4. desenha uma chapa por quadro e grava resultados/solucao.png.
 Precisa do matplotlib:  pip install matplotlib
-"""
+--------------------------------------------------------------------"""
 import os
 import sys
 

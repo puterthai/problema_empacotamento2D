@@ -4,7 +4,7 @@ Para cada instância roda o AG N_EXECUCOES vezes (sementes 0, 1, 2, ...) e
 compara o número de chapas com os limites publicados por Blum et al. (2012),
 Apêndice A: LB (limite inferior) e UB (melhor solução conhecida).
  
-Uso:  python experimentos.py [número de execuções]
+Para executar:  python experimentos.py [número de execuções]
 Lê as instâncias da pasta dados/ e grava, na pasta resultados/:
 resultados.csv, convergencia.csv e resumo.csv (e imprime o resumo).
 -----------------------------------------------------------------------"""

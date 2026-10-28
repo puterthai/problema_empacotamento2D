@@ -43,7 +43,7 @@ def ler_instancia(caminho):
 
     É um piso: nenhuma solução usa menos que isso, mas nem sempre
     dá para atingi-lo, por causa do formato das peças.
-"""
+------------------------------------------------------------"""
 def limite_inferior(W, H, pecas):
     area_total = 0
     # Soma a área de todas as peças

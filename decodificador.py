@@ -4,7 +4,7 @@ Entrada: uma ordem das peças (lista de índices), por exemplo [1, 3, 2, 0].
 Saída: as chapas montadas. Cada chapa é uma lista de peças colocadas,
         e cada peça colocada é a tupla (índice, x, y, largura, altura).
         (x, y) é o canto inferior esquerdo; e y cresce para cima.
----------------------------------------------------------------------"""
+-----------------------------------------------------------------------"""
 
 # Retorna verdadeiro se o retângulo (x, y, w, h) está dentro da chapa
 # e não se sobrepõe a nenhuma peça já colocada.

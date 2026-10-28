@@ -1,9 +1,10 @@
-"""Cod06 (parte 2): gráficos a partir de resultados.csv e convergencia.csv.
+"""Cod06 (parte 2): gráficos a partir de resultados.csv
+e convergencia.csv.
 
-Uso:  python graficos.py
-Lê os CSVs da pasta resultados/ e grava lá: convergencia.png e comparacao.png
+Lê os CSVs da pasta resultados/ e envia para ela
+    os arquivos convergencia.png e comparacao.png
 Precisa do matplotlib:  pip install matplotlib
-"""
+---------------------------------------------------------"""
 import csv
 import os
 import statistics

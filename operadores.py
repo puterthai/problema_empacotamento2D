@@ -3,7 +3,7 @@
 Um indivíduo é uma ordem das peças: uma lista de índices sem repetição,
 por exemplo [1, 3, 2, 0]. Todos os operadores devolvem uma lista nova e
 sempre uma permutação válida (cada peça aparece uma única vez).
--------------------------------------------------------------------"""
+------------------------------------------------------------------"""
 import random
 
 # Sorteia k indivíduos e devolve (cópia do) que tiver a menor nota.

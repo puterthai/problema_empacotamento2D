@@ -19,7 +19,7 @@ from operadores import selecao_torneio, cruzamento_ox, mutacao_troca
       k_torneio -> quantos indivíduos disputam cada torneio
       elitismo -> quantos melhores passam direto para a próxima geração
       semente -> fixa o sorteio: mesma semente, mesmo resultado
--------------------------------------------------------------------------------------"""
+-----------------------------------------------------------------------------------"""
 def executar_ag(pecas, W, H, tam_pop=50, geracoes=100,
                 taxa_cruzamento=0.9, taxa_mutacao=0.2,
                 k_torneio=3, elitismo=1,

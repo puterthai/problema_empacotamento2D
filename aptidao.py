@@ -4,7 +4,7 @@
 
 Menor é melhor. O aproveitamento de uma chapa é a área ocupada pelas
 peças dividida pela área da chapa (vale entre 0 e 1).
-------------------------------------------------------------"""
+--------------------------------------------------------------"""
 from decodificador import decodificar
 
 def aproveitamentos(chapas, W, H):
