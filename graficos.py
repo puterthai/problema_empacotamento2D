@@ -42,9 +42,9 @@ def ler(caminho):
 def grafico_convergencia(conv, resultados, instancias):
     """Uma janela por instância: aptidão do melhor indivíduo ao longo das
     gerações (média das execuções e faixa do melhor ao pior)."""
-    ncols = 2
+    ncols = 3
     nrows = -(-len(instancias) // ncols)
-    fig, eixos = plt.subplots(nrows, ncols, figsize=(9, 3.2 * nrows),
+    fig, eixos = plt.subplots(nrows, ncols, figsize=(13, 3.4 * nrows),
                               squeeze=False)
     for ax, nome in zip(eixos.flat, instancias):
         por_geracao = defaultdict(list)
@@ -69,7 +69,7 @@ def grafico_convergencia(conv, resultados, instancias):
     h, l = eixos.flat[0].get_legend_handles_labels()
     fig.legend(h, l, loc="upper center", ncol=2, frameon=False,
                bbox_to_anchor=(0.5, 1.0))
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
+    fig.tight_layout(rect=(0, 0, 1, 0.92))
     fig.savefig(os.path.join(PASTA_RESULTADOS, "convergencia.png"), dpi=160)
     plt.close(fig)
 
