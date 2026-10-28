@@ -1,54 +1,19 @@
 # Empacotamento bidimensional de retângulos com Algoritmo Genético
 
-Trabalho de Inteligência Artificial - Universidade Federal de Mato Grosso (UFMT), FAENG.
-Prof. Dr. Gustavo Post Sabin.
-Autores: Thainã Mendes, Matheus Pardi e Victor Hugo Moraes.
-
-## O que o programa faz
-
-Dado um conjunto de peças retangulares e chapas idênticas, coloca todas as peças
-nas chapas, sem sobreposição e sem girar as peças, usando o menor número possível
-de chapas (*two-dimensional bin packing*, variante orientada).
-
-Um Algoritmo Genético (AG) evolui a **ordem** em que as peças são colocadas.
-Um decodificador *Bottom-Left* transforma cada ordem em chapas, e a aptidão
-(*fitness*) de uma ordem é
-
-    aptidão = (nº de chapas - 1) + aproveitamento da chapa menos cheia
-
-**Menor é melhor**. Os resultados são comparados com os limites inferior (LB) e
-superior (UB) publicados por Blum et al. (2012) para as mesmas instâncias.
+Algoritmo Genético (AG) para o problema de empacotamento bidimensional de
+retângulos (peças orientadas, sem rotação), aplicado a instâncias do conjunto
+CLASS da 2DPackLib. O método, a representação e os resultados estão descritos
+no relatório vinculado à entrega do trabalho da disciplina.
 
 ## Requisitos
 
 - Python 3.8 ou superior (testado com Python 3.13).
 - O AG e os experimentos usam apenas a biblioteca padrão do Python.
-- Os gráficos e o desenho da solução precisam do matplotlib:
-
-```
-pip install matplotlib
-```
-
-## Estrutura da pasta
-
-```
-README.md
-instancia.py          leitura dos arquivos .ins2D e limite inferior por área
-decodificador.py      decodificador Bottom-Left (ordem -> chapas)
-aptidao.py            aproveitamento das chapas e aptidão
-operadores.py         seleção por torneio, cruzamento OX e mutação por troca
-ag.py                 laço principal do Algoritmo Genético
-experimentos.py       várias instâncias x várias execuções; grava os CSV
-graficos.py           gráficos a partir dos CSV
-desenhar_solucao.py   desenha uma solução encontrada (figura do relatório)
-dados/                as 6 instâncias usadas (formato .ins2D)
-resultados/           CSV e figuras gerados
-```
+- Os gráficos e o desenho da solução precisam do matplotlib.
 
 ## Como executar
 
-Todos os comandos são executados **dentro da pasta do projeto**. Em alguns
-sistemas o comando é `python3` em vez de `python`.
+Todos os comandos são executados **dentro da pasta do projeto**.
 
 ### 1. Reproduzir os resultados do relatório
 
@@ -58,10 +23,8 @@ python graficos.py
 ```
 
 - `experimentos.py` roda o AG 10 vezes (sementes 0 a 9) em cada uma das 6
-  instâncias e leva alguns minutos (cerca de 5). Para outro número de execuções:
-  `python experimentos.py 5`.
-- `graficos.py` lê os CSV e gera as figuras. Precisa rodar depois de
-  `experimentos.py`.
+  instâncias e leva alguns minutos (a depender da configuração da máquina). Para outro número de execuções: `python experimentos.py 5`.
+- `graficos.py` lê os CSV e gera as figuras. Precisa rodar depois de `experimentos.py`.
 
 Arquivos gerados em `resultados/`:
 
@@ -94,17 +57,6 @@ python desenhar_solucao.py cl_05_040_01 9
 Roda o AG, confere que a solução é válida (cada peça uma vez, dentro da chapa,
 sem sobreposição) e grava `resultados/solucao.png`. Sem argumentos, usa
 `cl_05_040_01` com a semente 9.
-
-### 4. Testar cada módulo
-
-Cada módulo tem um exemplo pequeno no final do arquivo, que roda ao executá-lo diretamente (o `instancia.py` precisa do caminho de uma instância):
-
-```
-python instancia.py dados/cl_05_040_01.ins2D
-python decodificador.py
-python aptidao.py
-python operadores.py
-```
 
 ## Reprodutibilidade
 
