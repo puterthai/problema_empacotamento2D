@@ -97,11 +97,10 @@ sem sobreposição) e grava `resultados/solucao.png`. Sem argumentos, usa
 
 ### 4. Testar cada módulo
 
-Cada módulo tem um exemplo pequeno no final do arquivo, que roda ao executá-lo
-diretamente:
+Cada módulo tem um exemplo pequeno no final do arquivo, que roda ao executá-lo diretamente (o `instancia.py` precisa do caminho de uma instância):
 
 ```
-python instancia.py
+python instancia.py dados/cl_05_040_01.ins2D
 python decodificador.py
 python aptidao.py
 python operadores.py
